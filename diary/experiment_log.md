@@ -39,3 +39,36 @@ Next: ubah zip(...) jadi list(zip(...)) agar bisa dipakai berulang; mulai implem
 - Network: tambah fungsi sigmoid + feedforward(a) dan test output shape (10,1) untuk 1 sample input.
 
 - Setelah itu baru lanjut: SGD() skeleton (epoch loop + mini-batch split) tanpa backprop dulu (cuma nyiapin struktur).
+
+# Experiment log (2026-04-08, Asia/Jakarta)
+- hal penting diingat:
+batch_idx = np.arange(10)
+itu bikin mini batch ku berisi 10 imgae + 10 label
+
+mini_batch[0] = sample pertama bentuk tuple(x0, y0)
+mini_batch[0][0] = x0 (gambar)
+mini_batch[0][1] = y0 (label)
+
+mini_batch[1] = sample kedua (x1, y1)
+mini_batch[1][0] = x1 (gambar/input sample kedua)
+mini_batch[1][1] = y1 (label sample kedua)
+dst..
+hasil hari ini: 
+![](diary/test-image/image.png)
+
+Goal hari ini: “Switch ke opsi 2 (wrap per mini-batch), bukan wrap 50k di awal.” (selesai)
+
+Bug yang ketemu + fix:
+load_raw() sempat return function (lupa ()), fix: return data_load()
+make_train_batch sempat return label int, fix: pakai vectorized_result(y[i]) biar shape (10,1)
+
+Sanity check yang lolos: len(mini_batch)=10, x.shape=(784,1), y.shape=(10,1)
+hasil:
+10
+(784, 1) (10, 1)
+
+TODO besok:
+Implement sigmoid(z) + feedforward(a) di neural_network.py
+
+Test: input x dari mini_batch[0][0] → output shape (10,1)
+Bikin iter_batch_indices(n, batch_size) untuk shuffle+split mini-batch index

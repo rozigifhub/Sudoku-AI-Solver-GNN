@@ -1,30 +1,11 @@
-from mnist_loader import data_load
+import numpy as np
+from preprocess_data import load_raw, make_train_batch
 
-# Load Data
-training_data, validation_data, test_data = data_load()
+(tr_d, va_d, te_d) = load_raw()
+X_train, y_train = tr_d
 
-# Pisahkan gambar dan label
-X_train, y_train = training_data
+batch_idx = np.arange(10)
+mini_batch = make_train_batch(X_train, y_train, batch_idx)
 
-print("=== CONTOH 1 ===")
-print("Gambar (784 nilai pixel):")
-print(X_train[0])           # print gambar pertama
-print("Label:", y_train[0]) # print label pertama
-print("\n")
-
-print("=== CONTOH 2 ===")
-print("Gambar (784 nilai pixel):")
-print(X_train[1])           # print gambar kedua
-print("Label:", y_train[1]) # print label kedua
-print("\n")
-
-# Print shapes khusus untuk data_load() (RAW)
-print("=== SHAPE RAW DARI data_load() ===")
-print("X_train shape :", X_train.shape)
-print("y_train shape :", y_train.shape)
-
-print("X_val shape   :", validation_data[0].shape)
-print("y_val shape   :", validation_data[1].shape)
-
-print("X_test shape  :", test_data[0].shape)
-print("y_test shape  :", test_data[1].shape)
+print(len(mini_batch))
+print(mini_batch[0][0].shape, mini_batch[0][1].shape)  # (784,1) (10,1)
