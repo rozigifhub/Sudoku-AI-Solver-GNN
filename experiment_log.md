@@ -21,3 +21,21 @@ python CNN\cnn\main.py
 Shapes: train (50000,784), valid (10000,784), test (10000,784)
 Warning pickle: hanya muncul saat convert (sekali), loader normal pakai .npz
 
+# Experiment log (2026-04-08, Asia/Jakarta)
+
+- Fokus: rapihin pipeline MNIST untuk training NN dari nol (NumPy).
+Progress: buat data_load_wrapper() untuk ubah X jadi shape (784,1) dan label train jadi one-hot (10,1).
+
+- Catatan teknis: train pakai one-hot, valid/test tetap label int untuk evaluasi.
+
+- Risiko/issue: zip() itu iterator sekali pakai → bisa “habis” setelah 1 kali loop epoch.
+
+Next: ubah zip(...) jadi list(zip(...)) agar bisa dipakai berulang; mulai implement Network.feedforward().
+
+- Besok (2026-04-09) yang dikerjakan:
+
+- Preprocess: ganti training_data/validation_data/test_data jadi list(zip(...)), lalu print len(...) dan shape sample pertama.
+
+- Network: tambah fungsi sigmoid + feedforward(a) dan test output shape (10,1) untuk 1 sample input.
+
+- Setelah itu baru lanjut: SGD() skeleton (epoch loop + mini-batch split) tanpa backprop dulu (cuma nyiapin struktur).
