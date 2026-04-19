@@ -29,3 +29,4 @@ print("y_val shape   :", validation_data[1].shape)
 
 print("X_test shape  :", test_data[0].shape)
 print("y_test shape  :", test_data[1].shape)
+
