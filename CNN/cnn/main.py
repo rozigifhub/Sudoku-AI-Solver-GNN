@@ -17,25 +17,25 @@ import sys
 # print(mini_batch[0][0].shape, mini_batch[0][1].shape)  # (784,1) (10,1)
 
 BASE_DIR = Path(__file__).resolve().parent
-MODEL_PATH = BASE_DIR / "models" / "mnist_relu_softmax(784,32,16,10)_mbc64_eta0_01.npz"
+MODEL_PATH = BASE_DIR / "models" / "mnist_relu_softmax(784,32,16,10)_mbc64_eta0_01_NewDataset.npz"
 
 if MODEL_PATH.exists():
     net = Network.load(MODEL_PATH)
     print("loaded saved model")
 else:
     sys.exit("Model tidak ditemukan")
-
+# net = Network([784, 32, 16, 10])
 # net.SGD(
 #     X_train,
 #     y_train,
-#     epochs=20,
+#     epochs=5,
 #     mini_batch_size=64,
 #     eta=0.01,
 #     batch_maker=make_train_batch,
 #     X_test=X_test,
 #     y_test=y_test
 #     )
-# net.save("models/mnist_relu_softmax(784,32,16,10)_mbc64_eta0_01.npz")
+# net.save("models/mnist_relu_softmax(784,32,16,10)_mbc64_eta0_01_NewDataset.npz")
 # print("Model baru sudah ke save")
 
 

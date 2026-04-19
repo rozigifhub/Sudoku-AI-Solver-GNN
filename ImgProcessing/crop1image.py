@@ -17,7 +17,7 @@ pad = 0 if w % 9 == 0 else 1
 innerImage = w - 2 * pad
 cell = innerImage // 9
 inset = 6
-target_size = (28, 28)
+target_size = (49, 49)
 if cell * 9 != innerImage:
     raise SystemExit(f"innerImage={innerImage} tidak habis dibagi 9 (pad salah atau gambar tidak pas)")
 

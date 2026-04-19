@@ -46,8 +46,9 @@ def save_mnist_npz(
 
 def parse_args() -> argparse.Namespace:
     repo_root = Path(__file__).resolve().parent.parent
-    default_inp = repo_root / "Digit_Data_CNN" / "mnist.pkl.gz"
-    default_out = repo_root / "Digit_Data_CNN" / "mnist.npz"
+    # default_inp = repo_root / "Digit_Data_CNN" / "mnist.pkl.gz"
+    default_inp = repo_root / "Digit_Data_CNN" / "mnist_sudoku_digits.pkl.gz"
+    default_out = repo_root / "Digit_Data_CNN" / "mnist_sudoku.npz"
 
     p = argparse.ArgumentParser(description="Convert mnist.pkl.gz (pickle) to mnist.npz (NumPy).")
     p.add_argument("--in", dest="inp", type=Path, default=default_inp, help="Input mnist.pkl.gz path.")

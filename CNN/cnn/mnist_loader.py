@@ -26,11 +26,11 @@ def data_load(path: str | Path | None = None):
     repo_root = Path(__file__).resolve().parent.parent.parent
     if path is None:
         # Prefer future-proof .npz if it exists (no pickle warning, safer than pickle)
-        npz_path = repo_root / "Digit_Data_CNN" / "mnist.npz"
+        npz_path = repo_root / "Digit_Data_CNN" / "mnist_sudoku.npz"
         if npz_path.exists():
             return load_mnist_npz(npz_path)
         # Fallback to legacy pickle (one-time conversion recommended)
-        pkl_path = repo_root / "Digit_Data_CNN" / "mnist.pkl.gz"
+        pkl_path = repo_root / "Digit_Data_CNN" / "mnist_sudoku_digits.pkl.gz"
         return load_mnist_pkl_gz(pkl_path)
 
     path = Path(path)
@@ -90,17 +90,17 @@ def save_sample_pngs(
 if __name__ == "__main__":
     repo_root = Path(__file__).resolve().parent.parent.parent
 
-    ap = argparse.ArgumentParser(description="Load mnist.pkl.gz and export a few sample PNGs.")
+    ap = argparse.ArgumentParser(description="Load mnist_sudoku_digits.pkl.gz and export a few sample PNGs.")
     ap.add_argument(
         "--path",
         type=Path,
-        default=repo_root / "Digit_Data_CNN" / "mnist.pkl.gz",
+        default=repo_root / "Digit_Data_CNN" / "mnist_sudoku_digits.pkl.gz",
         help="Path to mnist.pkl.gz",
     )
     ap.add_argument(
         "--out",
         type=Path,
-        default=repo_root / "CNN" / "mnist_samples",
+        default=repo_root / "CNN" / "mnist_samples_sudokuGenerator",
         help="Output folder for sample PNGs.",
     )
     ap.add_argument("--n", type=int, default=20, help="How many sample images to export.")

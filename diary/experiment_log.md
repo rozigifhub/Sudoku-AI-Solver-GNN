@@ -145,3 +145,48 @@ Rencana berikutnya:
 buat dataset Sudoku sendiri dengan class 0..9 (0 untuk blank)
 pertimbangkan pakai CNN setelah dataset Sudoku siap
 jangan lanjut tuning kecil-kecilan model MNIST terlalu lama karena limit utamanya sudah jelas
+
+# Experiment log (2026/04/19)
+
+Fokus hari ini: membangun dataset synthetic digit Sudoku dan menguji model pada real case board Sudoku.
+
+Tujuan:
+
+membuat dataset digit Sudoku yang lebih sesuai domain dibanding MNIST
+memastikan model bisa dipakai membaca digit di setiap cell Sudoku nyata
+Perubahan yang dilakukan:
+
+membuat folder digitImageGenerator/
+menambahkan script digitImageGenerator/generate_dataset.py
+mendesain dataset synthetic format mirip MNIST (.pkl.gz)
+dataset berisi digit 1..9 dengan font Roboto
+blank tidak dimasukkan ke dataset, karena blank ditangani di preprocessing / inference
+pipeline preprocessing dan crop cell tetap dipakai untuk pengujian real case
+Spesifikasi dataset synthetic:
+
+format output:
+((X_train, y_train), (X_valid, y_valid), (X_test, y_test))
+kelas: 1..9
+gambar disiapkan sebagai input classifier
+target jumlah data besar untuk train dan test
+
+pendekatan visual: render digit rapi, crop, center, resize, flatten
+Hasil eksperimen:
+
+- model tidak hanya berjalan di dataset synthetic
+- model juga berhasil diuji pada real case
+model bisa membaca digit pada tiap cell Sudoku dari board yang di-crop
+- ini menunjukkan pipeline preprocessing + model sudah cukup cocok untuk kasus aktual yang sedang diuji
+Temuan penting:
+
+- dataset synthetic sangat membantu karena bentuk digit lebih mirip Sudoku rapi dibanding MNIST tulisan tangan
+- preprocessing tetap menjadi bagian penting agar hasil real case akurat
+keberhasilan real case menunjukkan bahwa pendekatan yang dipakai sekarang sudah usable, bukan hanya bagus di data buatan
+Kesimpulan:
+
+- hari ini berhasil membuat fondasi dataset synthetic Sudoku
+- sekaligus berhasil membuktikan bahwa model bisa membaca digit pada cell Sudoku nyata
+- ini menjadi milestone penting karena model tidak hanya bagus di training environment, tetapi juga berhasil dipakai pada data real case
+
+next step: 
+- uji ulang ke lebih banyak board Sudoku nyata untuk cek konsistensi generalisasi
