@@ -67,8 +67,81 @@ hasil:
 10
 (784, 1) (10, 1)
 
-TODO besok:
-Implement sigmoid(z) + feedforward(a) di neural_network.py
+Target besok:
+Implement ReLU(z) + softmax(z) (untuk output) + feedforward(a) di neural_network.py
 
 Test: input x dari mini_batch[0][0] → output shape (10,1)
 Bikin iter_batch_indices(n, batch_size) untuk shuffle+split mini-batch index
+
+# Experiment log (2026-04-08, Asia/Jakarta)
+Target kemarin:
+- feedforward (Done)
+- ReLU + softmax (Done)
+Target hari ini:
+- SGD(training_data, epochs, mini_batch_size, eta, test_data=None)
+Di dalamnya: shuffle index/data, pecah jadi mini-batch, panggil placeholder update_mini_batch(...)
+
+- update_mini_batch untuk sekarang cukup pass atau print shape (nanti baru diisi backprop)
+
+# Experiment log (2026-04-16, Asia/Jakarta)
+Epoch 10:
+baseline epoch 10, network[784,30,10], eta= 0.01, mbc=32 : 93.58%
+epoch = 10, eta = 0.05, mbc = 128, network[784,30,10] = 93.79%
+epoch = 10, eta = 0.01, mbc = 64, network[784,30,10] = 93.75%
+
+epoch 20  
+network[784,32, 16,10], eta = 0.01, mbc = 64 : 95.06%
+
+Penambahan: 
+- ReLU prime(z)
+- SGD
+- update_mini_batch
+- backprop
+
+# Experiment log (19/04/2026)
+Ink thresshold = 0.05 dan min_pixel = 8
+hasil: tidak bagus
+Fokus hari ini: nyambungin model MNIST ke real case Sudoku dari folder out_cells dan rapihin preprocessing inferensi.
+
+Perubahan yang dilakukan:
+
+ImgProcessing/crop1image.py
+
+hasil crop cell sekarang langsung di-resize ke 28x28
+source image diarahkan ke 10kGambarSudoku/image.png
+bug perhitungan grid dibenerin (innerImage)
+pad dibuat otomatis sesuai ukuran gambar
+CNN/cnn/preprocess_data.py
+ditambah helper inferensi untuk load cell dari out_cells
+
+preprocessing diubah jadi:
+grayscale
+threshold biner
+blank filtering
+crop bounding box digit
+center ke canvas
+resize ke 28x28
+CNN/cnn/neural_network.py
+dipakai method predict_digit() untuk inferensi cell
+Temuan penting:
+
+gambar real case aktif ternyata 549x549, bukan 551x551
+asumsi cell lama jadi tidak valid, jadi out_cells harus di-crop ulang
+domain mismatch masih besar:
+model dilatih di MNIST
+real case pakai digit Sudoku yang rapi
+akibatnya hasil inferensi masih sering meleset (5 terbaca 6, dst.)
+Hasil hari ini:
+
+out_cells sudah berhasil digenerate ulang menjadi 81 cell ukuran 28x28
+blank cell dan digit cell sekarang sudah lebih rapi masuk ke preprocessing
+pipeline inferensi real case sudah jalan, tapi akurasi masih belum cukup bagus untuk dipakai final
+Kesimpulan:
+
+bottleneck utama sekarang bukan lagi loading atau resize
+masalah terbesar adalah mismatch antara data training MNIST dan digit Sudoku real case
+Rencana berikutnya:
+
+buat dataset Sudoku sendiri dengan class 0..9 (0 untuk blank)
+pertimbangkan pakai CNN setelah dataset Sudoku siap
+jangan lanjut tuning kecil-kecilan model MNIST terlalu lama karena limit utamanya sudah jelas

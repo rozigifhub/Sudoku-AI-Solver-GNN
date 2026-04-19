@@ -1,9 +1,9 @@
-from PIL import Image
+﻿from PIL import Image
 from pathlib import Path
 
 # LOAD GAMBAR
 base = Path(__file__).resolve().parent.parent  # folder beating_michiko
-img_path = base / "10kGambarSudoku" / "gambar1.PNG"
+img_path = base / "10kGambarSudoku" / "image.png"
 
 img = Image.open(img_path).convert("RGB");
 print("size: ", img.size)
@@ -13,10 +13,11 @@ w, h = img.size
 if w != h:
     raise SystemExit (f"gambar harus square")
 
-pad = 1
+pad = 0 if w % 9 == 0 else 1
 innerImage = w - 2 * pad
 cell = innerImage // 9
 inset = 6
+target_size = (28, 28)
 if cell * 9 != innerImage:
     raise SystemExit(f"innerImage={innerImage} tidak habis dibagi 9 (pad salah atau gambar tidak pas)")
 
@@ -33,7 +34,10 @@ for row in range(9):
         y1 = pad + (row + 1) * cell - inset
 
         cell_img = img.crop((x0, y0, x1, y1))
+        cell_img = cell_img.resize(target_size, Image.Resampling.LANCZOS)
         cell_img.save(out_dir / f"cell_r{row}_c{column}.png")
         count += 1
 
-print("saved: ", count, "cells to", out_dir)
+print("saved: ", count, "cells to", out_dir, "with size", target_size)
+
+
