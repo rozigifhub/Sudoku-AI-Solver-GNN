@@ -1,10 +1,23 @@
 import numpy as np
 from pathlib import Path
+from PIL import Image
 # from preprocess_data import load_raw, make_train_batch
+from crop import cropping
 from neural_network import Network
 # from preprocess_data import load_cell_for_inference
 from preprocess_data import load_cells_from_folder
+from solveSudoku import solve_sudoku, is_valid_board, format_sudoku
 import sys
+
+#Load gambar
+base = Path(__file__).resolve().parent.parent.parent  # folder sudoku-solver
+img_path = base / "10kGambarSudoku" / "image.png"
+
+img = Image.open(img_path).convert("RGB");
+print("size: ", img.size)
+
+dummy = cropping(img, base)
+print("Status crop: berhasil")
 
 # (tr_d, va_d, te_d) = load_raw()
 # X_train, y_train = tr_d
@@ -24,6 +37,8 @@ if MODEL_PATH.exists():
     print("loaded saved model")
 else:
     sys.exit("Model tidak ditemukan")
+
+
 # net = Network([784, 32, 16, 10])
 # net.SGD(
 #     X_train,
@@ -46,4 +61,15 @@ else:
 
 cells = load_cells_from_folder("out_cells")
 digits = [str(net.predict_digit(x)) for _, x in cells]
-print("".join(digits))
+puzzle = "".join(digits)
+
+print("Puzzle :", puzzle)
+
+solution = solve_sudoku(puzzle)
+
+solution = solve_sudoku(puzzle)
+
+if solution is None:
+    print("Sudoku tidak bisa diselesaikan")
+else:
+    print(format_sudoku(solution))
