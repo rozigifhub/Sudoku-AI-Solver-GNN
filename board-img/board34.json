@@ -1,0 +1,36 @@
+{
+  "version": "6.1.3",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "sudoku_board",
+      "points": [
+        [
+          453.632183908046,
+          187.79310344827587
+        ],
+        [
+          912.1139240506328,
+          187.37552742616037
+        ],
+        [
+          912.8500000000001,
+          646.45
+        ],
+        [
+          453.45,
+          646.65
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "shape_type": "polygon",
+      "flags": {},
+      "mask": null
+    }
+  ],
+  "imagePath": "board34.png",
+  "imageData": null,
+  "imageHeight": 768,
+  "imageWidth": 1366
+}
