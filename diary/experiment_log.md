@@ -190,3 +190,15 @@ Kesimpulan:
 
 next step: 
 - uji ulang ke lebih banyak board Sudoku nyata untuk cek konsistensi generalisasi
+
+# Experiment log (2026/04/20):
+- Model bisa membaca digit dengan benar, asal cropping sesuai dengan ukuran board.
+- Membutuhkan model baru untuk mendeteksi board.
+
+# Experiment log (2026/05/01):
+- Mencari 100 gambar(untuk sekarang) sebagai dataset untuk detection board dari berbagai website dengan UI berbeda dan mengedit setiap gambar, berkaitan dengan kontras, brightness, rotation, dan translasi
+
+# Experiment log (2026/05/02):
+- Melabeli setiap gambar menggunakan software labelme.
+
+# Experiment log (2026/05/06):
